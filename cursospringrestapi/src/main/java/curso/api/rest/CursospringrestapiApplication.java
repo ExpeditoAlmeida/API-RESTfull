@@ -8,7 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EntityScan(basePackages = { "curso.api.rest.model" })
@@ -18,10 +20,24 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @RestController
 @EnableAutoConfiguration
-public class CursospringrestapiApplication {
+public class CursospringrestapiApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringrestapiApplication.class, args);
+
 	}
 
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+
+		registry.addMapping("/usuario/**").allowedMethods("*").allowedOrigins("*"); //  "*" Libera o mapeamento para todas as origens. 
+
+//		 registry.addMapping("/**");//liberra o controle a todos os endpoint
+//
+//		 registry.addMapping("/usuario");//liberra o controle a todos os endpoint que  estão em usuario
+
+//		registry.addMapping("/usuario/**").allowedMethods("POST,DELETE").allowedOrigins("sistema1",
+//				"wwww.PaginaDoServico", "localhost:8080");
+		// Liberado serviço para servidor especifico
+	}
 }
